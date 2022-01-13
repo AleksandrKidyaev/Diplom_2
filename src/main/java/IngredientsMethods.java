@@ -1,6 +1,4 @@
 import io.qameta.allure.Step;
-
-
 import static io.restassured.RestAssured.given;
 
 public class IngredientsMethods extends RestAssuredSpecification {

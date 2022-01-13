@@ -1,6 +1,5 @@
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-
 import static io.restassured.RestAssured.given;
 
 public class OrderMethods extends RestAssuredSpecification {
@@ -14,7 +13,6 @@ public class OrderMethods extends RestAssuredSpecification {
                 .body("{\"ingredients\": \"" + ingredientId + "\"}")
                 .when()
                 .post(endpointUrl);
-
     }
 
     @Step("Создание заказа.")
@@ -25,7 +23,6 @@ public class OrderMethods extends RestAssuredSpecification {
                 .body("{\"ingredients\": \"" + ingredientId + "\"}")
                 .when()
                 .post(endpointUrl);
-
     }
 
     @Step("Попытка заказа без ингредиентов.")
@@ -35,7 +32,6 @@ public class OrderMethods extends RestAssuredSpecification {
                 .headers("Authorization", accessToken)
                 .when()
                 .post(endpointUrl);
-
     }
 
     @Step("Получение заказов.")
@@ -54,6 +50,5 @@ public class OrderMethods extends RestAssuredSpecification {
                 .when()
                 .get(endpointUrl);
     }
-
 
 }

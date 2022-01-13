@@ -50,7 +50,7 @@ public class OrderTest { //эндпойнт /api/orders
     @DisplayName("Успешное создание заказа.")
     @Description("Тест корректности ответа при успешном создании заказа авторизованным пользователем для эндпойнта /api/orders.")
     @Owner(value = "Кидяев Александр Дмитриевич")
-    @Severity(value = SeverityLevel.NORMAL)
+    @Severity(value = SeverityLevel.BLOCKER)
     public void checkResponseAfterCorrectOrderPostTest() {
         UserRegistrationData userRegistrationData = UserRegistrationData.getRandomRegistrationData();
         userMethods.registerNewUser(userRegistrationData);
@@ -111,7 +111,7 @@ public class OrderTest { //эндпойнт /api/orders
     @DisplayName("Получение заказов конкретного авторизированного пользователя.")
     @Description("Тест корректности ответа при попытке получения списка заказов конкретного авторизованного пользователя для эндпойнта /api/orders.")
     @Owner(value = "Кидяев Александр Дмитриевич")
-    @Severity(value = SeverityLevel.NORMAL)
+    @Severity(value = SeverityLevel.CRITICAL)
     public void checkResponseAfterOrderGetForAuthorizedUserTest() {
         UserRegistrationData userRegistrationData = UserRegistrationData.getRandomRegistrationData();
         userMethods.registerNewUser(userRegistrationData);
@@ -144,4 +144,5 @@ public class OrderTest { //эндпойнт /api/orders
                 .and()
                 .statusCode(SC_UNAUTHORIZED);
     }
+
 }

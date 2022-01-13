@@ -42,7 +42,6 @@ public class UserAuthorizationTest { //эндпойнт /api/auth/login
                 .body("success", equalTo(true))
                 .and()
                 .statusCode(SC_OK);
-        //Логаут, чтобы корректно и почище завершить сессию. Раз уж удалять пользователей нельзя после их регистрации. Заодно проверка ответа на логаут по токену не лишняя
     }
 
     @Epic(value = "API Stellar Burgers")

@@ -15,8 +15,6 @@ public class UserMethods extends RestAssuredSpecification{
                 .post(endpointUrl + "register");
     }
 
-
-
     @Step("Регистрация нового пользователя.")
     public Response registerNewUserWithIncorrectData (String registrationData) {
         return given()

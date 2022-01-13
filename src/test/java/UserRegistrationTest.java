@@ -30,7 +30,6 @@ public class UserRegistrationTest { //эндпойнт /api/auth/register
                 .body("success", equalTo(true))
                 .and()
                 .statusCode(SC_OK);
-
     }
 
     @Epic(value = "API Stellar Burgers")
@@ -51,7 +50,6 @@ public class UserRegistrationTest { //эндпойнт /api/auth/register
                 .body("success", equalTo(false))
                 .and()
                 .statusCode(SC_FORBIDDEN);
-
     }
 
     @Epic(value = "API Stellar Burgers")

@@ -24,12 +24,16 @@ public class UserRegistrationTest { //эндпойнт /api/auth/register
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.BLOCKER)
     public void checkResponseForRegisteringANewUserTest() {
+
         UserRegistrationData userRegistrationData = UserRegistrationData.getRandomRegistrationData();
+
         Response registrationResponse = userMethods.registerNewUser(userRegistrationData);
+
         registrationResponse.then().assertThat()
                 .body("success", equalTo(true))
                 .and()
                 .statusCode(SC_OK);
+
     }
 
     @Epic(value = "API Stellar Burgers")
@@ -41,15 +45,19 @@ public class UserRegistrationTest { //эндпойнт /api/auth/register
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.CRITICAL)
     public void checkResponseAfterRegistrationOfSecondUserWithSameParametersTest() {
+
         UserRegistrationData userRegistrationData = UserRegistrationData.getRandomRegistrationData();
         userMethods.registerNewUser(userRegistrationData);
+
         Response registrationResponse = userMethods.registerNewUser(userRegistrationData);
+
         registrationResponse.then().assertThat()
                 .body("message", equalTo("User already exists"))
                 .and()
                 .body("success", equalTo(false))
                 .and()
                 .statusCode(SC_FORBIDDEN);
+
     }
 
     @Epic(value = "API Stellar Burgers")
@@ -61,14 +69,18 @@ public class UserRegistrationTest { //эндпойнт /api/auth/register
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.MINOR)
     public void checkUserRegistrationWithoutLoginTest() {
+
         String bodyWithoutEmail = "{\"password\":\"somepassword\",\"name\":\"somename\"}";
+
         Response registrationResponse = userMethods.registerNewUserWithIncorrectData(bodyWithoutEmail);
+
         registrationResponse.then().assertThat()
                 .body("message", equalTo("Email, password and name are required fields"))
                 .and()
                 .body("success", equalTo(false))
                 .and()
                 .statusCode(SC_FORBIDDEN);
+
     }
 
     @Epic(value = "API Stellar Burgers")
@@ -80,14 +92,18 @@ public class UserRegistrationTest { //эндпойнт /api/auth/register
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.MINOR)
     public void checkUserRegistrationWithoutPasswordTest() {
+
         String bodyWithoutEmail = "{\"email\":\"email@test.ru\",\"name\":\"somename\"}";
+
         Response registrationResponse = userMethods.registerNewUserWithIncorrectData(bodyWithoutEmail);
+
         registrationResponse.then().assertThat()
                 .body("message", equalTo("Email, password and name are required fields"))
                 .and()
                 .body("success", equalTo(false))
                 .and()
                 .statusCode(SC_FORBIDDEN);
+
     }
 
     @Epic(value = "API Stellar Burgers")
@@ -99,14 +115,18 @@ public class UserRegistrationTest { //эндпойнт /api/auth/register
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.MINOR)
     public void checkUserRegistrationWithoutNameTest() {
+
         String bodyWithoutEmail = "{\"email\":\"email@test.ru\",\"password\":\"somepassword\"}";
+
         Response registrationResponse = userMethods.registerNewUserWithIncorrectData(bodyWithoutEmail);
+
         registrationResponse.then().assertThat()
                 .body("message", equalTo("Email, password and name are required fields"))
                 .and()
                 .body("success", equalTo(false))
                 .and()
                 .statusCode(SC_FORBIDDEN);
+
     }
 
 }

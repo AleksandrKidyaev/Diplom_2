@@ -13,14 +13,19 @@ public class UserAuthorizationData {
 
     @Step("Получение случайных данных для авторизации.")
     public static UserAuthorizationData getRandomAuthorizationData () {
+
         final String email = RandomStringUtils.randomAlphabetic(4) + "@" + RandomStringUtils.randomAlphabetic(4) + ".ru";
         final String password = RandomStringUtils.randomAlphabetic(10);
+
         return new UserAuthorizationData(email, password);
+
     }
 
     @Step("Получение логина и пароля из данных о регистрации.")
     public static UserAuthorizationData from(UserRegistrationData userRegistrationData) {
+
         return new UserAuthorizationData(userRegistrationData.email, userRegistrationData.password);
+
     }
 
 }

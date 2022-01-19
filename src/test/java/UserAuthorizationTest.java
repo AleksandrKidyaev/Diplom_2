@@ -24,24 +24,30 @@ public class UserAuthorizationTest { //эндпойнт /api/auth/login
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.BLOCKER)
     public void checkResponseAfterCorrectUserAuthorizationAndLogoutTest() {
+
         UserRegistrationData userRegistrationData = UserRegistrationData.getRandomRegistrationData();
         userMethods.registerNewUser(userRegistrationData);
+
         Response loginResponse = userMethods.userAuthorization(UserAuthorizationData.from(userRegistrationData));
         String accessToken = userMethods.returnUserAccessToken(UserAuthorizationData.from(userRegistrationData));
+
         loginResponse.then().assertThat()
                 .body("accessToken", equalTo(accessToken))
                 .and()
                 .body("success", equalTo(true))
                 .and()
                 .statusCode(SC_OK);
+
         String refreshToken = userMethods.returnUserRefreshToken(UserAuthorizationData.from(userRegistrationData));
         Response logoutResponse = userMethods.userLogout(refreshToken);
+
         logoutResponse.then().assertThat()
                 .body("message", equalTo("Successful logout"))
                 .and()
                 .body("success", equalTo(true))
                 .and()
                 .statusCode(SC_OK);
+
     }
 
     @Epic(value = "API Stellar Burgers")
@@ -53,14 +59,17 @@ public class UserAuthorizationTest { //эндпойнт /api/auth/login
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.NORMAL)
     public void checkResponseAfterIncorrectUserAuthorizationTest() {
+
         UserAuthorizationData userAuthorizationData = UserAuthorizationData.getRandomAuthorizationData();
         Response loginResponse = userMethods.userAuthorization(userAuthorizationData);
+
         loginResponse.then().assertThat()
                 .body("message", equalTo("email or password are incorrect"))
                 .and()
                 .body("success", equalTo(false))
                 .and()
                 .statusCode(SC_UNAUTHORIZED);
+
     }
 
 }

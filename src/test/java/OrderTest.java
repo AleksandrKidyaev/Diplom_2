@@ -29,14 +29,17 @@ public class OrderTest { //эндпойнт /api/orders
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.NORMAL)
     public void checkResponseAfterOrderPostWithoutAuthorizationTest() {
+
         String ingredient = ingredientsMethods.getIngredientId(3);
         Response orderResponse = orderMethods.postOrderWithoutAuthorization(ingredient);
+
         orderResponse.then().assertThat()
                 .body("message", equalTo("You should be authorised"))
                 .and()
                 .body("success", equalTo(false))
                 .and()
                 .statusCode(SC_UNAUTHORIZED);
+
     }
     /*
     Этот тест падает, т.к. заказ успешно создается без хэдера с авторизационным токеном. Поле message в ответе нет.
@@ -52,17 +55,21 @@ public class OrderTest { //эндпойнт /api/orders
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.BLOCKER)
     public void checkResponseAfterCorrectOrderPostTest() {
+
         UserRegistrationData userRegistrationData = UserRegistrationData.getRandomRegistrationData();
         userMethods.registerNewUser(userRegistrationData);
         String accessToken = userMethods.returnUserAccessToken(UserAuthorizationData.from(userRegistrationData));
+
         String ingredientId = ingredientsMethods.getIngredientId(1);
         Response orderResponse = orderMethods.postOrder(ingredientId, accessToken);
+
         orderResponse.then().assertThat()
                 .body("name", notNullValue())
                 .and()
                 .body("success", equalTo(true))
                 .and()
                 .statusCode(SC_OK);
+
     }
 
     @Epic(value = "API Stellar Burgers")
@@ -74,16 +81,20 @@ public class OrderTest { //эндпойнт /api/orders
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.NORMAL)
     public void checkResponseAfterOrderPostWithoutIngredientsTest() {
+
         UserRegistrationData userRegistrationData = UserRegistrationData.getRandomRegistrationData();
         userMethods.registerNewUser(userRegistrationData);
+
         String accessToken = userMethods.returnUserAccessToken(UserAuthorizationData.from(userRegistrationData));
         Response orderResponse = orderMethods.postOrderWithoutIngredients(accessToken);
+
         orderResponse.then().assertThat()
                 .body("message", equalTo("Ingredient ids must be provided"))
                 .and()
                 .body("success", equalTo(false))
                 .and()
                 .statusCode(SC_BAD_REQUEST);
+
     }
 
     @Epic(value = "API Stellar Burgers")
@@ -95,13 +106,17 @@ public class OrderTest { //эндпойнт /api/orders
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.NORMAL)
     public void checkResponseAfterOrderPostWithIncorrectIngredientsTest() {
+
         UserRegistrationData userRegistrationData = UserRegistrationData.getRandomRegistrationData();
         userMethods.registerNewUser(userRegistrationData);
+
         String ingredientId = "incorrectId";
         String accessToken = userMethods.returnUserAccessToken(UserAuthorizationData.from(userRegistrationData));
         Response orderResponse = orderMethods.postOrder(ingredientId, accessToken);
+
         orderResponse.then().assertThat()
                  .statusCode(SC_INTERNAL_SERVER_ERROR);
+
     }
 
     @Epic(value = "API Stellar Burgers")
@@ -113,10 +128,13 @@ public class OrderTest { //эндпойнт /api/orders
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.CRITICAL)
     public void checkResponseAfterOrderGetForAuthorizedUserTest() {
+
         UserRegistrationData userRegistrationData = UserRegistrationData.getRandomRegistrationData();
         userMethods.registerNewUser(userRegistrationData);
+
         String accessToken = userMethods.returnUserAccessToken(UserAuthorizationData.from(userRegistrationData));
         Response getOrderResponse = orderMethods.getOrders(accessToken);
+
         getOrderResponse.then().assertThat()
                 .body("total", notNullValue())
                 .and()
@@ -125,6 +143,7 @@ public class OrderTest { //эндпойнт /api/orders
                 .body("success", equalTo(true))
                 .and()
                 .statusCode(SC_OK);
+
     }
 
     @Epic(value = "API Stellar Burgers")
@@ -136,13 +155,16 @@ public class OrderTest { //эндпойнт /api/orders
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.NORMAL)
     public void checkResponseAfterOrderGetWithoutAuthorizationTest() {
+
         Response getOrderResponse = orderMethods.getOrdersWithoutAuthorization();
+
         getOrderResponse.then().assertThat()
                 .body("message", equalTo("You should be authorised"))
                 .and()
                 .body("success", equalTo(false))
                 .and()
                 .statusCode(SC_UNAUTHORIZED);
+
     }
 
 }

@@ -24,22 +24,30 @@ public class UserPatchTest { //эндпойнт /api/auth/user
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.CRITICAL)
     public void checkResponseAfterCorrectUserPatchTest() {
+
         UserRegistrationData userRegistrationData = UserRegistrationData.getRandomRegistrationData();
         userMethods.registerNewUser(userRegistrationData);
+
         String accessToken = userMethods.returnUserAccessToken(UserAuthorizationData.from(userRegistrationData));
         UserRegistrationData newUserData = UserRegistrationData.getRandomRegistrationData();
         Response patchResponse = userMethods.userPatch(newUserData, accessToken);
+
         patchResponse.then().assertThat()
                 .body("success", equalTo(true))
                 .and()
                 .statusCode(SC_OK);
+
         Response loginResponse = userMethods.userAuthorization(UserAuthorizationData.from(newUserData));
+
         loginResponse.then().assertThat()
                 .body("success", equalTo(true))
                 .and()
                 .statusCode(SC_OK);
+
         String refreshToken = userMethods.returnUserRefreshToken(UserAuthorizationData.from(newUserData));
+
         userMethods.userLogout(refreshToken);
+
     }
 
     @Epic(value = "API Stellar Burgers")
@@ -51,23 +59,29 @@ public class UserPatchTest { //эндпойнт /api/auth/user
     @Owner(value = "Кидяев Александр Дмитриевич")
     @Severity(value = SeverityLevel.CRITICAL)
     public void checkResponseAfterUserWithoutAuthorizationPatchTest() {
+
         UserRegistrationData userRegistrationData = UserRegistrationData.getRandomRegistrationData();
         userMethods.registerNewUser(userRegistrationData);
+
         UserRegistrationData newUserData = UserRegistrationData.getRandomRegistrationData();
         Response patchResponse = userMethods.userPatchWithoutAuthorization(newUserData);
+
         patchResponse.then().assertThat()
                 .body("message", equalTo("You should be authorised"))
                 .and()
                 .body("success", equalTo(false))
                 .and()
                 .statusCode(SC_UNAUTHORIZED);
+
         Response loginResponse = userMethods.userAuthorization(UserAuthorizationData.from(newUserData));
+
         loginResponse.then().assertThat()
                 .body("message", equalTo("email or password are incorrect"))
                 .and()
                 .body("success", equalTo(false))
                 .and()
                 .statusCode(SC_UNAUTHORIZED);
+
     }
 
 

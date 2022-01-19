@@ -7,9 +7,11 @@ public class RestAssuredSpecification { //создал класс специфи
     private static final String baseUri = "https://stellarburgers.nomoreparties.site/";
 
     public RequestSpecification getBaseSpec () {
+
         return new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
                 .setBaseUri(baseUri)
                 .build();
+
     }
 }
